@@ -1,6 +1,7 @@
 require "battlestation/version"
 
 require 'battlestation/plan'
+require 'battlestation/dependency'
 
 module Battlestation
   # Plans a new battlestation
