@@ -12,5 +12,8 @@ module Battlestation
       dependencies[name] = Battlestation::Dependency.new(name, &block)
     end
 
+    def execute
+      dependencies.each_pair { |name, dep| dep.execute }
+    end
   end
 end

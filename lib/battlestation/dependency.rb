@@ -14,5 +14,10 @@ module Battlestation
       executables << filename
     end
 
+    def execute
+      executables.each do |executable|
+        system("which -s #{executable}")
+      end
+    end
   end
 end
