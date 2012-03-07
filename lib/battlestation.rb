@@ -1,11 +1,24 @@
-require "battlestation/version"
+require 'thor'
 
+require "battlestation/version"
 require 'battlestation/plan'
 require 'battlestation/dependency'
+require 'battlestation/ui'
+require 'battlestation/cli'
 
 module Battlestation
-  # Plans a new battlestation
-  def self.plan(opts = {}, &block)
-    return Battlestation::Plan.new opts, &block
+
+  class << self
+    attr_writer :ui
+
+    # Plans a new battlestation
+    def plan(opts = {}, &block)
+      return Plan.new opts, &block
+    end
+
+    def ui
+      @ui ||= UI.new
+    end
   end
+
 end
