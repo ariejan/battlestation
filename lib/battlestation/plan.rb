@@ -5,7 +5,7 @@ module Battlestation
     def initialize(opts = {}, &block)
       @dependencies = {}
 
-      instance_eval &block
+      instance_eval &block if block_given?
     end
 
     def dependency(name, &block)
