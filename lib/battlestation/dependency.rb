@@ -23,8 +23,7 @@ module Battlestation
         opts = exe[:opts]
         name = "executable-#{filename}"
 
-
-        if system("/usr/bin/env which #{filename} &> /dev/null")
+        if executable_exists?(filename)
           result << { status: :okay, msg: "#{filename} found", name: name }
         else
           result << { status: :fail, msg: "#{filename} not found", resolution: opts[:resolution], name: name }
@@ -32,6 +31,12 @@ module Battlestation
       end
 
       result.flatten
+    end
+
+    private
+    def executable_exists?(filename)
+      files = %x(/usr/bin/env which #{filename}).split
+      return files.any? && File.executable?(files.first)
     end
   end
 end
