@@ -10,6 +10,10 @@ module Battlestation
       instance_eval &block if block_given?
     end
 
+    def title
+      "Manning #{name}"
+    end
+
     def executable(filename, opts = {})
       operations << Battlestation::Operations::ExecutableCheck.new(filename, opts)
     end

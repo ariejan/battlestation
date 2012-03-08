@@ -22,12 +22,5 @@ module Battlestation
     def dependency(name, &block)
       tasks[name] = Battlestation::Task.new(name, &block)
     end
-
-    # Execute the plan
-    def execute
-      status = {}
-      tasks.each_pair { |name, task| status[name] = task.execute }
-      status
-    end
   end
 end

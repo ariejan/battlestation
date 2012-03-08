@@ -12,6 +12,9 @@ module Battlestation
     def warn(message, newline = nil)
     end
 
+    def notice(message, newline = nil)
+    end
+
     def debug(message, newline = nil)
     end
 
@@ -44,6 +47,10 @@ module Battlestation
 
       def fail(message, newline = nil)
         tell_me(" [FAIL] #{message}", :red, newline)
+      end
+
+      def notice(message, newline = nil)
+        tell_me(" [INFO] #{message}", :blue, newline)
       end
 
       def okay(message, newline = nil)
