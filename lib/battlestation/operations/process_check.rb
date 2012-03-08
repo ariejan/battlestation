@@ -14,7 +14,7 @@ module Battlestation
         if process_running?
           { status: :okay, msg: "#{identifier} up and running", name: name }
         else
-          { status: opts[:error] ? :fail : :warn, msg: "#{identifier} not running", resolution: opts[:resolution], name: name }
+          { status: opts[:force_failure] ? :fail : :warn, msg: "#{identifier} not running", resolution: opts[:resolution], name: name }
         end
       end
 

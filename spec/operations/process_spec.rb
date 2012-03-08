@@ -17,8 +17,8 @@ describe Battlestation::Operations::ProcessCheck do
     it { subject.status.should include(name: "process-does-not-exist") }
   end
 
-  context "with an invalid process and forced error" do
-    subject { Battlestation::Operations::ProcessCheck.new('does-not-exist', error: true) }
+  context "with an invalid process and forced failure" do
+    subject { Battlestation::Operations::ProcessCheck.new('does-not-exist', force_failure: true) }
 
     it { subject.status.should include(status: :fail) }
     it { subject.status.should include(msg: "does-not-exist not running") }
