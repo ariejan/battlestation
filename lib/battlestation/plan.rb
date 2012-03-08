@@ -19,8 +19,9 @@ module Battlestation
     end
 
     # Adds a new task as a dependency.
-    def dependency(name, &block)
+    def task(name, &block)
       tasks[name] = Battlestation::Task.new(name, &block)
     end
+    alias_method :dependency, :task
   end
 end

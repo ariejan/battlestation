@@ -27,6 +27,9 @@ module Battlestation
     def confirm(message, newline = nil)
     end
 
+    def todo(message, newline = nil)
+    end
+
     def group(title, &block)
     end
 
@@ -43,6 +46,10 @@ module Battlestation
         tell_me("\n")
         yield
         tell_me("\n")
+      end
+
+      def todo(message, newline = nil)
+        tell_me(" [TODO] #{message}", :cyan, newline)
       end
 
       def fail(message, newline = nil)

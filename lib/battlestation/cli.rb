@@ -37,21 +37,13 @@ module Battlestation
 
       # Execute tasks in order
       plan.tasks.each_pair do |name, task|
-        statuses = task.execute
-
         Battlestation.ui.group task.title do
-          if statuses.empty?
+          # Show a notice for empty tasks
+          if task.operations.empty?
             Battlestation.ui.notice("Nothing defined for #{task.name}")
           end
 
-          # Report successes and failures
-          statuses.each do |status|
-            Battlestation.ui.send(status[:status], status[:msg])
-
-            if status[:resolution]
-              Battlestation.ui.info(" "*4 + ">> " + status[:resolution])
-            end
-          end
+          task.execute
         end
       end
     end
