@@ -7,6 +7,8 @@ module Battlestation
 
       the_shell = (options["no-color"] ? Thor::Shell::Basic.new : shell)
       Battlestation.ui = UI::Shell.new(the_shell)
+
+      Battlestation.ui.info("Manning battlestation...")
     end
 
     check_unknown_options!
@@ -24,7 +26,6 @@ module Battlestation
       in order to run this project.
     D
     def check
-      Battlestation.ui.info("Manning battlestation...")
 
       if !File.exists?("Battlestation")
         Battlestation.ui.error "Could not read your Battlestation file"
@@ -34,10 +35,18 @@ module Battlestation
       # Parse/evaluate Battlestation
       plan = eval(File.read("Battlestation"))
 
-      plan.execute.each do |result|
-        result.each_pair do |status, message|
-          Battlestation.ui.send(status, message)
-        end
+      results = plan.execute
+
+      # Report successes and failures
+      results.each do |result|
+        Battlestation.ui.send(result[:status], result[:msg])
+      end
+
+      # Report resolutions
+      resolutions = results.map { |result| result[:resolution] }.compact
+      if resolutions.any?
+        Battlestation.ui.info("\nResolutions:\n")
+        resolutions.each { |resolution| Battlestation.ui.info(" * #{resolution}") }
       end
     end
   end

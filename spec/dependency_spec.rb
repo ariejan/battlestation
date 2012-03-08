@@ -4,14 +4,16 @@ describe Battlestation::Dependency do
   context "executables" do
     subject {
       Battlestation::Dependency.new :test_dep do
-        executable 'autoexec.bat'
+        executable 'autoexec.bat', resolution: "Install DOS"
       end
     }
 
     it "can be added" do
       subject.executables.should be_an(Array)
       subject.executables.should have(1).element
-      subject.executables.should include('autoexec.bat')
+
+      executable = subject.executables.first
+      executable.should include(filename: 'autoexec.bat', opts: { resolution: "Install DOS" })
     end
 
     it "can be executed" do
@@ -25,7 +27,9 @@ describe Battlestation::Dependency do
 
       result.should be_an(Array)
       result.should have(1).element
-      result.should include(okay: "autoexec.bat found")
+
+      status = result.first
+      status.should include(status: :okay, msg: "autoexec.bat found", name: "executable-autoexec.bat")
     end
 
     it "returns a result when not succesful" do
@@ -34,7 +38,9 @@ describe Battlestation::Dependency do
 
       result.should be_an(Array)
       result.should have(1).elements
-      result.should include(fail: "autoexec.bat not found")
+
+      status = result.first
+      status.should include(status: :fail, msg: "autoexec.bat not found", name: "executable-autoexec.bat", resolution: "Install DOS")
     end
   end
 end

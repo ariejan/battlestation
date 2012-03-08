@@ -10,25 +10,28 @@ module Battlestation
       instance_eval &block if block_given?
     end
 
-    def executable(filename)
-      executables << filename
+    def executable(filename, opts = {})
+      executables << { filename: filename, opts: opts }
     end
 
     # Execute this dependency
-    #
-    # @return [Array<Hash<Symbol, String>>] an array with status hashes.
     def execute
       result = []
 
-      executables.each do |executable|
-        if system("/usr/bin/env which #{executable} &> /dev/null")
-          result << { okay: "#{executable} found" }
+      executables.each do |exe|
+        filename = exe[:filename]
+        opts = exe[:opts]
+        name = "executable-#{filename}"
+
+
+        if system("/usr/bin/env which #{filename} &> /dev/null")
+          result << { status: :okay, msg: "#{filename} found", name: name }
         else
-          result << { fail: "#{executable} not found" }
+          result << { status: :fail, msg: "#{filename} not found", resolution: opts[:resolution], name: name }
         end
       end
 
-      result
+      result.flatten
     end
   end
 end

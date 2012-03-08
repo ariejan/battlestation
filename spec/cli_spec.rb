@@ -40,5 +40,17 @@ describe Battlestation::CLI do
 
       out.should =~ / \[FAIL\] unknown-executable-name not found/i
     end
+
+    it "reports resolutions on failure" do
+      check_battlefile <<-B
+        Battlestation.plan do
+          dependency :some_dep do
+            executable 'unknown-executable-name', resolution: "Install some app"
+          end
+        end
+      B
+
+      out.should =~ /Install some app/i
+    end
   end
 end
