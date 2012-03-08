@@ -1,26 +1,26 @@
 module Battlestation
-  class Dependency
+  class Task
     attr_accessor :name
-    attr_accessor :checks
+    attr_accessor :operations
 
     def initialize(name, &block)
       @name = name
-      @checks = []
+      @operations = []
 
       instance_eval &block if block_given?
     end
 
     def executable(filename, opts = {})
-      checks << Battlestation::Checks::Executable.new(filename, opts)
+      operations << Battlestation::Operations::ExecutableCheck.new(filename, opts)
     end
 
     def process(identifier, opts = {})
-      checks << Battlestation::Checks::Process.new(identifier, opts)
+      operations << Battlestation::Operations::ProcessCheck.new(identifier, opts)
     end
 
     # Execute this dependency
     def execute
-      checks.collect(&:status)
+      operations.collect(&:status)
     end
   end
 end

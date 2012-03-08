@@ -1,6 +1,6 @@
 module Battlestation
-  module Checks
-    class Executable < Base
+  module Operations
+    class ExecutableCheck < Base
       attr_accessor :filename
 
       def initialize(filename, opts = {})

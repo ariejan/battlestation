@@ -1,5 +1,5 @@
 module Battlestation
-  module Checks
+  module Operations
     class Base
       attr_accessor :name, :type, :opts
 
@@ -9,6 +9,6 @@ module Battlestation
   end
 end
 
-Dir["#{File.expand_path('../checks', __FILE__)}/*.rb"].each do |file|
+Dir["#{File.expand_path('../operations', __FILE__)}/*.rb"].each do |file|
   require file
 end

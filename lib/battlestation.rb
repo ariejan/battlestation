@@ -2,8 +2,8 @@ require 'thor'
 
 require "battlestation/version"
 require 'battlestation/plan'
-require 'battlestation/dependency'
-require 'battlestation/checks'
+require 'battlestation/task'
+require 'battlestation/operations'
 require 'battlestation/ui'
 require 'battlestation/cli'
 

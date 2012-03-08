@@ -1,6 +1,6 @@
 module Battlestation
-  module Checks
-    class Process < Base
+  module Operations
+    class ProcessCheck < Base
       attr_accessor :identifier
 
       def initialize(identifier, opts = {})

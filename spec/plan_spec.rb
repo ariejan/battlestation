@@ -5,12 +5,12 @@ describe Battlestation::Plan do
     subject { Battlestation.plan { dependency :postgres } }
 
     it "are added" do
-      subject.dependencies.should be_an(Hash)
-      subject.dependencies[:postgres].should be_a(Battlestation::Dependency)
+      subject.tasks.should be_an(Hash)
+      subject.tasks[:postgres].should be_a(Battlestation::Task)
     end
 
     it "are executed" do
-      subject.dependencies[:postgres].should_receive(:execute).once
+      subject.tasks[:postgres].should_receive(:execute).once
       subject.execute
     end
   end
