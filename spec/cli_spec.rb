@@ -41,6 +41,18 @@ describe Battlestation::CLI do
       out.should =~ / \[FAIL\] unknown-executable-name executable not found/i
     end
 
+    it "exists with error status 1 on failure" do
+      battlefile <<-B
+        Battlestation.plan do
+          dependency :some_dep do
+            executable 'unknown-executable-name'
+          end
+        end
+      B
+
+      battlestation(:check, exitstatus: true).should == 1
+    end
+
     it "reports resolutions on failure" do
       check_battlefile <<-B
         Battlestation.plan do

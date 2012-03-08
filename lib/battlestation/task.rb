@@ -44,6 +44,12 @@ module Battlestation
         if status[:resolution]
           Battlestation.ui.todo(">> " + status[:resolution])
         end
+
+        # Exit if this task failed. No point continuing
+        if status[:status] == :fail
+          Battlestation.ui.fail(">> Please resolve the failures above and re-run `battlestation`")
+          exit 1
+        end
       end
     end
   end
