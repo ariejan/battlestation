@@ -52,5 +52,27 @@ module Spec
       @out = %x{#{cmd}}.strip
       @exitstatus = $?.exitstatus
     end
+
+    def remove_battlefile
+      path = app("Battlestation")
+      FileUtils.rm_rf(path)
+    end
+
+    def battlefile(str)
+      path = app("Battlestation")
+      path.dirname.mkpath
+      File.open(path.to_s, "w") do |f|
+        f.puts str
+      end
+    end
+
+    def check_battlefile(str)
+      battlefile(str)
+      battlestation :check
+    end
+
+    def in_app_root(&block)
+      Dir.chdir(app, &block)
+    end
   end
 end

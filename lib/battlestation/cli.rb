@@ -15,7 +15,7 @@ module Battlestation
     class_option "no-color", :type => :boolean, :banner => "Disable colorization in output"
 
     def help
-      puts "Create 'Battlestatio'n in the root of your project and run 'battlestation check'"
+      Battlestation.ui.info "Create 'Battlestatio'n in the root of your project and run 'battlestation check'"
     end
 
     desc :check, "Checks your system for all dependencies"
@@ -27,6 +27,13 @@ module Battlestation
       if !File.exists?("Battlestation")
         Battlestation.ui.error "Could not read your Battlestation file"
         exit 1
+      end
+
+      # Parse/evaluate Battlestation
+      plan = eval(File.read("Battlestation"))
+
+      plan.execute.each do |result|
+        Battlestation.ui.info result
       end
     end
   end

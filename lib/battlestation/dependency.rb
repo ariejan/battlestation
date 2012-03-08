@@ -15,9 +15,17 @@ module Battlestation
     end
 
     def execute
+      result = []
+
       executables.each do |executable|
-        system("which -s #{executable}")
+        if system("which -s #{executable}")
+          result << "#{executable} found"
+        else
+          result << "#{executable} not found"
+        end
       end
+
+      result
     end
   end
 end
