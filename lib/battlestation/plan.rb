@@ -13,9 +13,9 @@ module Battlestation
     end
 
     def execute
-      results = []
-      dependencies.each_pair { |name, dep| results << dep.execute }
-      results.flatten
+      status = {}
+      dependencies.each_pair { |name, dep| status[name] = dep.execute }
+      status
     end
   end
 end

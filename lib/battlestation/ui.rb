@@ -24,12 +24,22 @@ module Battlestation
     def confirm(message, newline = nil)
     end
 
+    def group(title, &block)
+    end
+
     class Shell < UI
       attr_writer :shell
 
       def initialize(shell)
         @shell = shell
         @quiet = false
+      end
+
+      def group(title, &block)
+        tell_me("== #{title}")
+        tell_me("\n")
+        yield
+        tell_me("\n")
       end
 
       def fail(message, newline = nil)

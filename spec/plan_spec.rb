@@ -15,4 +15,3 @@ describe Battlestation::Plan do
     end
   end
 end
-
