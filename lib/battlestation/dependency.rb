@@ -14,14 +14,17 @@ module Battlestation
       executables << filename
     end
 
+    # Execute this dependency
+    #
+    # @return [Array<Hash<Symbol, String>>] an array with status hashes.
     def execute
       result = []
 
       executables.each do |executable|
         if system("/usr/bin/env which #{executable} &> /dev/null")
-          result << "#{executable} found"
+          result << { okay: "#{executable} found" }
         else
-          result << "#{executable} not found"
+          result << { fail: "#{executable} not found" }
         end
       end
 

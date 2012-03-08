@@ -2,6 +2,13 @@ require 'rubygems/user_interaction'
 
 module Battlestation
   class UI
+
+    def fail(message, newline = nil)
+    end
+
+    def okay(message, newline = nil)
+    end
+
     def warn(message, newline = nil)
     end
 
@@ -25,8 +32,16 @@ module Battlestation
         @quiet = false
       end
 
+      def fail(message, newline = nil)
+        tell_me(" [FAIL] #{message}", :red, newline)
+      end
+
+      def okay(message, newline = nil)
+        tell_me(" [OKAY] #{message}", :green, newline)
+      end
+
       def warn(message, newline = nil)
-        tell_me(message, :yellow, newline)
+        tell_me(" [WARN] #{message}", :yellow, newline)
       end
 
       def debug(message, newline = nil)

@@ -25,7 +25,7 @@ describe Battlestation::Dependency do
 
       result.should be_an(Array)
       result.should have(1).element
-      result.should include("autoexec.bat found")
+      result.should include(okay: "autoexec.bat found")
     end
 
     it "returns a result when not succesful" do
@@ -34,7 +34,7 @@ describe Battlestation::Dependency do
 
       result.should be_an(Array)
       result.should have(1).elements
-      result.should include("autoexec.bat not found")
+      result.should include(fail: "autoexec.bat not found")
     end
   end
 end

@@ -24,6 +24,8 @@ module Battlestation
       in order to run this project.
     D
     def check
+      Battlestation.ui.info("Manning battlestation...")
+
       if !File.exists?("Battlestation")
         Battlestation.ui.error "Could not read your Battlestation file"
         exit 1
@@ -33,7 +35,9 @@ module Battlestation
       plan = eval(File.read("Battlestation"))
 
       plan.execute.each do |result|
-        Battlestation.ui.info result
+        result.each_pair do |status, message|
+          Battlestation.ui.send(status, message)
+        end
       end
     end
   end

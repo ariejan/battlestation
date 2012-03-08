@@ -8,7 +8,7 @@ describe Battlestation::CLI do
 
     it "write an error" do
       battlestation :check
-      out.should eql("Could not read your Battlestation file")
+      out.should =~ /Could not read your Battlestation file/
     end
 
     it "exits with status 1" do
@@ -26,7 +26,7 @@ describe Battlestation::CLI do
         end
       B
 
-      out.should =~ /ls found/i
+      out.should =~ / \[OKAY\] ls found/i
     end
 
     it "reports an error" do
@@ -38,7 +38,7 @@ describe Battlestation::CLI do
         end
       B
 
-      out.should =~ /unknown-executable-name not found/i
+      out.should =~ / \[FAIL\] unknown-executable-name not found/i
     end
   end
 end
