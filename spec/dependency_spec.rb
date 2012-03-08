@@ -15,12 +15,12 @@ describe Battlestation::Dependency do
     end
 
     it "can be executed" do
-      subject.should_receive(:system).with('/usr/bin/env which autoexec.bat')
+      subject.should_receive(:system).with('/usr/bin/env which autoexec.bat &> /dev/null')
       subject.execute
     end
 
     it "returns a result when succesful" do
-      subject.should_receive(:system).with('/usr/bin/env which autoexec.bat').and_return(true)
+      subject.should_receive(:system).with('/usr/bin/env which autoexec.bat &> /dev/null').and_return(true)
       result = subject.execute
 
       result.should be_an(Array)
@@ -29,7 +29,7 @@ describe Battlestation::Dependency do
     end
 
     it "returns a result when not succesful" do
-      subject.should_receive(:system).with('/usr/bin/env which autoexec.bat').and_return(false)
+      subject.should_receive(:system).with('/usr/bin/env which autoexec.bat &> /dev/null').and_return(false)
       result = subject.execute
 
       result.should be_an(Array)

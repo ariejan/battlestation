@@ -18,7 +18,7 @@ module Battlestation
       result = []
 
       executables.each do |executable|
-        if system("/usr/bin/env which #{executable}")
+        if system("/usr/bin/env which #{executable} &> /dev/null")
           result << "#{executable} found"
         else
           result << "#{executable} not found"
