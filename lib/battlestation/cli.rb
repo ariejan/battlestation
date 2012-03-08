@@ -35,18 +35,15 @@ module Battlestation
       # Parse/evaluate Battlestation
       plan = eval(File.read("Battlestation"))
 
-      result = plan.execute
-
-      # Report successes and failures
-      result.each_pair do |name, statuses|
-        Battlestation.ui.group "Checking #{name}" do
-          statuses.each do |status|
-            Battlestation.ui.send(status[:status], status[:msg])
-
-            if status[:resolution]
-              Battlestation.ui.info(" "*4 + ">> " + status[:resolution])
-            end
+      # Execute tasks in order
+      plan.tasks.each_pair do |name, task|
+        Battlestation.ui.group task.title do
+          # Show a notice for empty tasks
+          if task.operations.empty?
+            Battlestation.ui.notice("Nothing defined for #{task.name}")
           end
+
+          task.execute
         end
       end
     end

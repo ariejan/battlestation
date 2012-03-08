@@ -12,6 +12,9 @@ module Battlestation
     def warn(message, newline = nil)
     end
 
+    def notice(message, newline = nil)
+    end
+
     def debug(message, newline = nil)
     end
 
@@ -22,6 +25,9 @@ module Battlestation
     end
 
     def confirm(message, newline = nil)
+    end
+
+    def todo(message, newline = nil)
     end
 
     def group(title, &block)
@@ -42,8 +48,16 @@ module Battlestation
         tell_me("\n")
       end
 
+      def todo(message, newline = nil)
+        tell_me(" [TODO] #{message}", :cyan, newline)
+      end
+
       def fail(message, newline = nil)
         tell_me(" [FAIL] #{message}", :red, newline)
+      end
+
+      def notice(message, newline = nil)
+        tell_me(" [INFO] #{message}", :blue, newline)
       end
 
       def okay(message, newline = nil)
