@@ -25,38 +25,32 @@ module Battlestation
 
     private
     def check_executables
-      result = []
-      executables.each do |exe|
+      executables.inject([]) do |result, exe|
         filename = exe[:filename]
-        opts = exe[:opts]
-        name = "executable-#{filename}"
+        opts     = exe[:opts]
+        name     = "executable-#{filename}"
 
         if executable_exists?(filename)
           result << { status: :okay, msg: "#{filename} found", name: name }
         else
           result << { status: :fail, msg: "#{filename} not found", resolution: opts[:resolution], name: name }
         end
-      end
-
-      result.flatten
+      end.flatten
     end
 
     private
     def check_processes
-      result = []
-      processes.each do |process|
+      processes.inject([]) do |result, process|
         identifier = process[:identifier]
-        opts = process[:opts]
-        name = "process-#{identifier}"
+        opts       = process[:opts]
+        name       = "process-#{identifier}"
 
         if process_running?(identifier)
           result << { status: :okay, msg: "#{identifier} up and running", name: name }
         else
           result << { status: opts[:error] ? :fail : :warn, msg: "#{identifier} not running", resolution: opts[:resolution], name: name }
         end
-      end
-
-      result.flatten
+      end.flatten
     end
 
     private
