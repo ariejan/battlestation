@@ -42,7 +42,7 @@ module Battlestation
       end
 
       def group(title, &block)
-        tell_me("== #{title}")
+        tell_me("> #{title}")
         tell_me("\n")
         yield
         tell_me("\n")
