@@ -1,0 +1,25 @@
+Battlestation.plan do
+
+  dependency :redis do
+    executable 'redis-server'
+	process 'redis-server', resolution: "Install redis with `brew install redis` or `apt-get install redis`"
+  end
+
+  dependency :postgresql do
+    process 'postgres'
+  end
+
+  task :bundler do
+    run 'bundle install'
+  end
+
+  task :database do
+    run 'rake db:create'
+	run 'rake db:migrate'
+  end
+	
+  task :documentation do
+    run 'rm -rf .yardoc'
+	run 'yard'
+  end
+end

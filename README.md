@@ -10,55 +10,58 @@ Install is as a gem
 
     gem install battlestation
 
-or add it to your Gemfile
+It's a good idea to add it to the `:development` group in your `Gemfile` as well, but the idea is that you can run
+battlestation right after cloning your repository.
 
-    gem "battlestation", require: false
+Also, battlestation could take care of running `bundle install` for you.
 
 ## Usage
 
-In the root of your project create a file named `Battlestation`. This file can define your Battlestation plan.
+In the root of your project create a file named `Battlestation`. This file defines your Battlestation plan.
 
-This is an empty plan:
+You can create tasks or dependencies that will be executed sequencially. Each task is composed of one ore more operations.
 
-    Battlestation.plan do
-      
-    end
+Operations include:
 
-When you have your Battlestation file complete, run this from the root of your project:
+ * Checking for an executable file in your path
+ * Check if a process is running
+ * Run system commands
 
-    $ bundle exec battlestation
+These are three very basic building blocks, but together they allow you to plan your complete development environment. (We'll be happy to add more, but these'll get you started.)
 
-### Dependencies
+See [this example](https://github.com/ariejan/battlestation/blob/master/examples/Battlestation) for details.
 
-You can specify dependencies your battlestation needs in order to function properly. 
+## Bugs / Feature Requests
 
-#### Executables
+Please post them to [Github Issues](https://github.com/ariejan/battlestation/issues).
 
-If your project depends on a specific executable, you can verify that file exists and is executable:
+## Contributing
 
-    Battlestation.plan do
-      dependency :redis do
-        executable 'redis-server'
-      end
-    end
+Feel free to help out. Fork the project, write your specs and code and create a pull request.
 
-Optionally, you may provide instructions in the event the executable is not found.
+## Contributors
 
-    Battlestation.plan do
-      dependency :redis do
-        executable 'redis-server', resolution: "Install redis from redis.io or `brew install redis`"
-      end
-    end
+  * Ariejan de Vroom <ariejan> - original author
 
-If an executable is missing, it will cause a failure.
+## License
 
-#### Processes
+Copyright (c) 2012 Ariejan de Vroom
 
-You can check that a given process is running. If the process is not found, this causes a warning. You can force a failure like this:
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
 
-    Battlestation.plan do
-      dependency :redis do
-        process 'redis-server'', force_failure: true
-      end
-    end
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
