@@ -26,7 +26,7 @@ describe Battlestation::CLI do
         end
       B
 
-      out.should =~ / \[OKAY\] ls found/i
+      out.should =~ / \[OKAY\] ls executable found/i
     end
 
     it "reports an error" do
@@ -38,7 +38,7 @@ describe Battlestation::CLI do
         end
       B
 
-      out.should =~ / \[FAIL\] unknown-executable-name not found/i
+      out.should =~ / \[FAIL\] unknown-executable-name executable not found/i
     end
 
     it "reports resolutions on failure" do

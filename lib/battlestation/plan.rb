@@ -1,21 +1,21 @@
 module Battlestation
   class Plan
-    attr_accessor :dependencies
+    attr_accessor :tasks
 
     def initialize(opts = {}, &block)
-      @dependencies = {}
+      @tasks = {}
 
       instance_eval &block if block_given?
     end
 
     def dependency(name, &block)
-      dependencies[name] = Battlestation::Dependency.new(name, &block)
+      tasks[name] = Battlestation::Task.new(name, &block)
     end
 
     def execute
-      results = []
-      dependencies.each_pair { |name, dep| results << dep.execute }
-      results.flatten
+      status = {}
+      tasks.each_pair { |name, task| status[name] = task.execute }
+      status
     end
   end
 end

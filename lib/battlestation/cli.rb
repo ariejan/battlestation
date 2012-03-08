@@ -9,6 +9,7 @@ module Battlestation
       Battlestation.ui = UI::Shell.new(the_shell)
 
       Battlestation.ui.info("Manning battlestation...")
+      Battlestation.ui.info("")
     end
 
     check_unknown_options!
@@ -26,7 +27,6 @@ module Battlestation
       in order to run this project.
     D
     def check
-
       if !File.exists?("Battlestation")
         Battlestation.ui.error "Could not read your Battlestation file"
         exit 1
@@ -35,18 +35,19 @@ module Battlestation
       # Parse/evaluate Battlestation
       plan = eval(File.read("Battlestation"))
 
-      results = plan.execute
+      result = plan.execute
 
       # Report successes and failures
-      results.each do |result|
-        Battlestation.ui.send(result[:status], result[:msg])
-      end
+      result.each_pair do |name, statuses|
+        Battlestation.ui.group "Checking #{name}" do
+          statuses.each do |status|
+            Battlestation.ui.send(status[:status], status[:msg])
 
-      # Report resolutions
-      resolutions = results.map { |result| result[:resolution] }.compact
-      if resolutions.any?
-        Battlestation.ui.info("\nResolutions:\n")
-        resolutions.each { |resolution| Battlestation.ui.info(" * #{resolution}") }
+            if status[:resolution]
+              Battlestation.ui.info(" "*4 + ">> " + status[:resolution])
+            end
+          end
+        end
       end
     end
   end
