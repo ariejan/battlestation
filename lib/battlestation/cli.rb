@@ -27,13 +27,20 @@ module Battlestation
       in order to run this project.
     D
     def check
-      if !File.exists?("Battlestation")
+      plan = nil
+      filenames = ["Battlestation", "Battlestation.rb"].select { |f| File.exists?(f) }
+
+      case filenames.size
+      when 0
         Battlestation.ui.error "Could not read your Battlestation file"
         exit 1
+      when 1
+        plan = Battlestation.load(filenames.first)
+        exit 1 if plan.nil?
+      else # >1
+        Battlestation.ui.error "You cannot have both Battlestation and Battlestation.rb files. Choose one, remove the other."
+        exit 1
       end
-
-      # Parse/evaluate Battlestation
-      plan = eval(File.read("Battlestation"))
 
       # Execute tasks in order
       plan.tasks.each_pair do |name, task|
