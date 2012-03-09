@@ -2,7 +2,14 @@
 
 [![Build Status](https://secure.travis-ci.org/ariejan/battlestation.png?branch=master)](http://travis-ci.org/ariejan/battlestation)
 
-Battle Station allows you to get your development environment up-and-running *fast*. This is still a work in progress.
+Battlestation allows you to get your development environment up-and-running *fast*. Check you have all dependencies installed,
+run `bundle install`, get your database ready, generate docs.
+
+The goal of Battlestation is to allow you to easily setup your development environment with one, single command: `battlestation`
+
+## Screenshot
+
+![Screenshot 0.0.3](https://github.com/ariejan/battlestation/wiki/images/battlestation-0.0.3.jpg)
 
 ## Installation
 
