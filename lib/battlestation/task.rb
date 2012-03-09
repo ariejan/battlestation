@@ -19,6 +19,11 @@ module Battlestation
       operations << Battlestation::Operations::ExecutableCheck.new(filename, opts)
     end
 
+    # Check if a file exists
+    def file_exists(filename, opts = {})
+      operations << Battlestation::Operations::FileExistsCheck.new(filename, opts)
+    end
+
     # Check if a process is running
     def process(identifier, opts = {})
       operations << Battlestation::Operations::ProcessCheck.new(identifier, opts)

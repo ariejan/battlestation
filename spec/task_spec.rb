@@ -6,9 +6,10 @@ describe Battlestation::Task do
       executable 'meh'
       process 'some-server'
       run 'some command'
+      file_exists 'some-file'
     end
   }
 
   it { subject.operations.should be_an(Array) }
-  it { subject.operations.should have(3).elements }
+  it { subject.operations.should have(4).elements }
 end
