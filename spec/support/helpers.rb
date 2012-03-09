@@ -56,14 +56,21 @@ module Spec
     def remove_battlefile
       path = app("Battlestation")
       FileUtils.rm_rf(path)
+      path = app("Battlestation.rb")
+      FileUtils.rm_rf(path)
     end
+    alias_method :remove_battlefiles, :remove_battlefile
 
     def battlefile(str)
       path = app("Battlestation")
-      path.dirname.mkpath
-      File.open(path.to_s, "w") do |f|
-        f.puts str
-      end
+      write_battlefile(path, str)
+      path
+    end
+
+    def battlefilerb(str)
+      path = app("Battlestation.rb")
+      write_battlefile(path, str)
+      path
     end
 
     def check_battlefile(str)
@@ -73,6 +80,14 @@ module Spec
 
     def in_app_root(&block)
       Dir.chdir(app, &block)
+    end
+
+    private
+    def write_battlefile(path, str)
+      path.dirname.mkpath
+      File.open(path.to_s, "w") do |f|
+        f.puts str
+      end
     end
   end
 end

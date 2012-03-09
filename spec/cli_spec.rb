@@ -1,18 +1,66 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
 describe Battlestation::CLI do
-  context "without a valid Battlestation file" do
+  context "Battlestation files" do
     before do
       remove_battlefile
     end
 
-    it "write an error" do
-      battlestation :check
-      out.should =~ /Could not read your Battlestation file/
+    it "uses a Battlestation file" do
+      battlefile <<-B
+        Battlestation.plan do
+        end
+      B
+      battlestation(:check)
+
+      out.should_not =~ /Could not read your Battlestation file/
     end
 
-    it "exits with status 1" do
-      battlestation(:check, exitstatus: true).should == 1
+    it "checks for a Battlestation.rb file" do
+      battlefilerb <<-B
+        Battlestation.plan do
+        end
+      B
+      battlestation(:check)
+
+      out.should_not =~ /Could not read your Battlestation file/
+    end
+
+    it "complains when both Battlestation and Battlestation.rb exist" do
+      battlefile <<-B
+        Battlestation.plan do
+        end
+      B
+
+      battlefilerb <<-B
+        Battlestation.plan do
+        end
+      B
+
+      battlestation(:check)
+
+      out.should =~ /You cannot have both Battlestation and Battlestation.rb files. Choose one, remove the other./
+    end
+
+    context "without a valid Battlestation file" do
+      it "write an error" do
+        battlestation :check
+        out.should =~ /Could not read your Battlestation file/
+      end
+
+      it "exits with status 1" do
+        battlestation(:check, exitstatus: true).should == 1
+      end
+    end
+
+    context "with a Battlestation file with syntax errors" do
+      it "reports syntax errors in your Battlestation" do
+        check_battlefile <<-B
+          Syntactic Mumbo Jumbo
+        B
+
+        out.should =~ /Your Battlestation has syntax errors/
+      end
     end
   end
 

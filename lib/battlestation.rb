@@ -11,6 +11,18 @@ module Battlestation
   class << self
     attr_writer :ui
 
+    # Load the Battlestation or Battlestation.rb file
+    def load(filename)
+      plan = eval(File.read(filename))
+      return plan
+    rescue SyntaxError, NameError
+      Battlestation.ui.error("Your Battlestation has syntax errors.")
+      return nil
+    rescue
+      Battlestation.ui.error("Some error occured, but we're not sure what happened.")
+      return nil
+    end
+
     # Plan a new battlestation
     #
     # See README for details
